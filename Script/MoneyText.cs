@@ -10,12 +10,11 @@ public class MoneyText : MonoBehaviour
     void Start()
     {
         hasMoney = GetComponent<Text>();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        hasMoney.text = "G" + PlayerStatus.money.ToString();
+        hasMoney.text = PlayerStatus.money.ToString();
     }
 }

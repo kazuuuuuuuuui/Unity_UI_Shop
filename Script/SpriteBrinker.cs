@@ -18,6 +18,7 @@ public class SpriteBrinker : MonoBehaviour
         {
             alpha *= (-1);
             img.color = new Color(img.color.r, img.color.g, img.color.b, alpha);
+
             yield return new WaitForSeconds(点滅間隔);
         }
     }
