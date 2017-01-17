@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerStatus : MonoBehaviour
 {
     public static int money;
-    public static string[] items;
+    public static List<string> items = new List<string>();
+
+    //public static string[] items;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        money = 50;
-        items = new string[]{
-            "どうのつるぎ",
-            "どうのたて",
-            "やくそう",
-        };
+        money = 1000;
+        items.Add("どうのつるぎ");
+        items.Add("たびびとのふく");    
     }
 
     // Update is called once per frame

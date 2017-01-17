@@ -9,6 +9,9 @@ public class YesOrNoWindow : MonoBehaviour
     [SerializeField]
     Toggle[] toggles;
 
+    [SerializeField]
+    GameObject 店ウィンドウと金ウィンドウ;//消すのに不便だからがっちゃんこ
+
     // Use this for initialization
     void Start()
     {
@@ -22,16 +25,33 @@ public class YesOrNoWindow : MonoBehaviour
 
         if (WindowManager.今見ているウィンドウ.name == this.name)
         {
-            if (Input.GetKeyDown(KeyCode.DownArrow)) index = ++index % toggles.Length;
-            else if (Input.GetKeyDown(KeyCode.UpArrow)) index = (--index + toggles.Length) % toggles.Length;
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                WindowManager.pi.Play();
+                index = ++index % toggles.Length;
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                WindowManager.pi.Play();
+                index = (--index + toggles.Length) % toggles.Length;
+            }
             else if (Input.GetKeyDown(KeyCode.Return))
             {
-                string str = toggles[index].GetComponentInChildren<Text>().text;
-                Debug.Log(str);
+                WindowManager.pi.Play();//鳴ってる?
 
+                string str = toggles[index].GetComponentInChildren<Text>().text;
+        
                 if (str == "はい")
                 {
+                    MesseageWindow.message = "て「なにを　かうかね？";
+                    MesseageWindow.メッセージ更新するかフラグ = true;
+                    Destroy(WindowManager.今見ているウィンドウ);
 
+                    GameObject obj = Instantiate(店ウィンドウと金ウィンドウ);
+                    obj.transform.SetParent(transform.parent, false);
+
+                    WindowManager.前に見てたウィンドウ = WindowManager.今見ているウィンドウ;
+                    WindowManager.今見ているウィンドウ = obj;
                 }
                 else if (str == "いいえ")
                 {

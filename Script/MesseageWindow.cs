@@ -4,6 +4,8 @@ using System.Collections;
 
 public class MesseageWindow : MonoBehaviour
 {
+    AudioSource pipipipi;
+
     private Text text;
     public static bool メッセージ更新するかフラグ;
     public static string message;
@@ -24,6 +26,8 @@ public class MesseageWindow : MonoBehaviour
 
     void Start()
     {
+        pipipipi = GetComponent<AudioSource>();
+
         メッセージ更新するかフラグ = true;
         text = GetComponent<Text>();
         //StartCoroutine("TextUpdate");

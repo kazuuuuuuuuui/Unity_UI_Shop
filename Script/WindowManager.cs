@@ -15,9 +15,14 @@ public class WindowManager : MonoBehaviour
     public static GameObject 今見ているウィンドウ;
     public static GameObject 前に見てたウィンドウ;
 
+    public static AudioSource pi;
+
+
     // Use this for initialization
     void Start()
     {
+        pi = gameObject.GetComponent<AudioSource>();
+
         今見ているウィンドウ = null;
         前に見てたウィンドウ = null;
     }
@@ -36,13 +41,15 @@ public class WindowManager : MonoBehaviour
         {
             if (今見ているウィンドウ == null)
             {
-               GameObject obj = Instantiate(commandWindow);
+                pi.Play();
+                GameObject obj = Instantiate(commandWindow);
                 obj.transform.SetParent(transform, false);
                 前に見てたウィンドウ = 今見ているウィンドウ;
                 今見ているウィンドウ = obj;
             }
             else if (今見ているウィンドウ.name == "コマンド(Clone)")
             {
+                pi.Play();
                 MesseageWindow.message = "て「ここは　ぶきと　ぼうぐのみせだ。\n　 うっているものを みるかね？";
                 GameObject obj = Instantiate(messeageWindow);
                 obj.transform.SetParent(transform, false);

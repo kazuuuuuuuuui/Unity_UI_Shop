@@ -19,13 +19,13 @@ public class ItemShopSelector : MonoBehaviour
         //外でいじれたら嬉しい
         Dictionary<string, int> dict = new Dictionary<string, int>()
         {
-        {"ひのきのぼう", 50},
-        {"やくそう", 10},
-        {"ふつうのたて", 20},
-        {"すごそうなたて", 30},
-        {"アイアンソード", 60},
-        {"いのうえ", 5},
-        {"ああああ", 15}
+        {"ひのきのぼう", 5},
+        {"こんぼう", 10},
+        {"どうのつるぎ", 100},
+        {"ぬののふく", 30},
+        {"たびびとのふく", 70},
+        {"かわのよろい", 150},
+        {"ドラゴンシールド", 3500}
     };
 
         toggles = new Toggle[dict.Count];
@@ -53,13 +53,36 @@ public class ItemShopSelector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow)) index = ++index % toggles.Length;
-        else if (Input.GetKeyDown(KeyCode.UpArrow)) index = (--index + toggles.Length) % toggles.Length;
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            WindowManager.pi.Play();
+            index = ++index % toggles.Length;
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            WindowManager.pi.Play();
+            index = (--index + toggles.Length) % toggles.Length;
+        }
         else if (Input.GetKeyDown(KeyCode.Return))
         {
-            GameObject selectedItem = toggles[index].transform.FindChild("金額").gameObject;
-            int price = int.Parse(selectedItem.GetComponent<Text>().text);
-            if (PlayerStatus.money > price) PlayerStatus.money -= price;
+            WindowManager.pi.Play();
+
+            GameObject selectedItemPrice = toggles[index].transform.FindChild("金額").gameObject;
+            int price = int.Parse(selectedItemPrice.GetComponent<Text>().text);
+            if (PlayerStatus.money > price)
+            {
+                GameObject selectedItemName = toggles[index].transform.FindChild("名前").gameObject;
+                MesseageWindow.message = "て「" + selectedItemName.GetComponent<Text>().text + "だね\n　 どうも ありがとう。";
+                MesseageWindow.メッセージ更新するかフラグ = true;
+                PlayerStatus.money -= price;
+                PlayerStatus.items.Add(selectedItemName.GetComponent<Text>().text);
+                PlayerItems.HaveItemUpdate();
+            }
+            else
+            {
+                MesseageWindow.message = "て「おかねが　たりないよ！";
+                MesseageWindow.メッセージ更新するかフラグ = true;
+            }
         }
 
         toggles[index].isOn = true;
